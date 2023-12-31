@@ -10,7 +10,7 @@ import { useStateValue } from '../context/StateProvider';
 export default function Header() {
     const firebaseAuth =getAuth(app);
         const provider = new GoogleAuthProvider();
-        const [{user},dispatch] = useStateValue()
+        const [{user, cartShow,cartItems},dispatch] = useStateValue()
         const [isMenu,setMenu] = useState(false)
         const login=async()=>{
                 if (!user){
@@ -32,6 +32,13 @@ export default function Header() {
                 user:null,
             })
         }
+
+        const showCartMenu =()=>{
+            dispatch({
+                type: actionType.SET_CART_SHOW,
+                cartShow: !cartShow,
+            });
+        }
   return (
     <>
     <header className='fixed z-50 w-screen md:p-4 md:px-16 p-4 px-5 bg-primary'>
@@ -41,22 +48,15 @@ export default function Header() {
 
             </Link>
             <div className="flex items-center gap-8">
-            <motion.ul 
-            initial={{opacity:0,x:200}}
-            animate={{opacity:1,x:0}}
-            exit={{opacity:0,x:200}}
-            className="flex items-center gap-8 ">
-                <li className="text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer" onClick={()=>setMenu(false)}>Home</li>
-                <li className="text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer" onClick={()=>setMenu(false)}>Menu</li>
-                <li className="text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer" onClick={()=>setMenu(false)}>About us</li>
-                <li className="text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer" onClick={()=>setMenu(false)}>Service</li>
-            </motion.ul>
+           
        
-        <div className="relative flex items-center justify-center">
+        <div className="relative flex items-center justify-center" onClick={showCartMenu}>
             <MdShoppingBasket className="text-textColor text-2xl ml-8 cursor-pointer"/>
-                <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center">
-                    <p className="text-xs text-white font-semibold">2</p>
+            {cartItems && cartItems.length > 0 && (
+                    <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center">
+                    <p className="text-xs text-white font-semibold">{cartItems.length}</p>
                 </div>
+                )}
             </div>
 
             <div className='relative'>
@@ -81,11 +81,13 @@ export default function Header() {
 
             {/*Mobile */}
         <div className="flex md:hidden w-full h-full items-center justify-between">
-        <div className="relative flex items-center justify-center">
+        <div className="relative flex items-center justify-center" onClick={showCartMenu}>
             <MdShoppingBasket className="text-textColor text-2xl ml-8 cursor-pointer"/>
-                <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center">
-                    <p className="text-xs text-white font-semibold">2</p>
+            {cartItems && cartItems.length > 0 && (
+                    <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center">
+                    <p className="text-xs text-white font-semibold">{cartItems.length}</p>
                 </div>
+                )}
             </div>
             <Link to="/" className="flex items-center gap-2">
                 <img src="/assets/logo.png" alt="logo" className='w-20  object-cover'/>
@@ -106,13 +108,7 @@ export default function Header() {
              </Link>
              )}
 
-            <ul 
-            className="flex flex-col">
-                <li className="text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer hover:bg-slate-100 px-4 py-2 " onClick={()=>setMenu(false)}>Home</li>
-                <li className="text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer hover:bg-slate-100 px-4 py-2" onClick={()=>setMenu(false)}>Menu</li>
-                <li className="text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer hover:bg-slate-100 px-4 py-2" onClick={()=>setMenu(false)}>About us</li>
-                <li className="text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer hover:bg-slate-100 px-4 py-2" onClick={()=>setMenu(false)}>Service</li>
-            </ul>
+         
 
              <p className='m-2 p-2 rounded-md flex items-center justify-center bg-gray-200 gap-3 cursor-pointer hover:bg-slate-300 transition-all duration-100 ease-in-out text-textColor text-base' onClick={logout}>
                 Logout<MdLogout/>
@@ -125,3 +121,104 @@ export default function Header() {
     </>
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/*
+
+   <ul 
+            className="flex flex-col">
+                  <a href="#About">
+                <li className="text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer" onClick={()=>setMenu(false)}>
+                   About Us
+                    </li>
+                    </a> 
+                    <a href="#Menu">
+                <li className="text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer" onClick={()=>setMenu(false)}>
+                    Menu
+                    </li>
+                    </a>
+                    <a href="#Service">
+                <li className="text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer" onClick={()=>setMenu(false)}>Service</li>
+                </a>
+            </ul>
+
+*/}

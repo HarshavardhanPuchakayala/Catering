@@ -7,9 +7,9 @@ import {motion} from "framer-motion"
 import {useStateValue} from "../context/StateProvider"
 import {MdChevronLeft,MdChevronRight} from "react-icons/md"
 export default function MainContainer() {
-  const [{foodItems},dispatch]=useStateValue();
+  const [{foodItems,cartShow},dispatch]=useStateValue();
   const [scrollValue,setScrollValue] = useState(0);
-  useEffect(()=>{},[scrollValue])
+  useEffect(()=>{},[scrollValue,cartShow])
   return (
     <>
     <div className="w-full h-auto flex-col items-center justify-center">
@@ -45,7 +45,8 @@ export default function MainContainer() {
          data={foodItems?.filter((n)=>n.category=== "Fruits")}/>
       </section>
       <Menu/>
-      <Cart/>
+      
+      {cartShow && <Cart/>}
     </div>
 
     </>
