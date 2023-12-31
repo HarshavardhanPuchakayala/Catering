@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Home from "./Home"
+import Menu from "./Menu"
+import Cart from './Cart'
+import RowContainer from "./RowContainer"
 import {motion} from "framer-motion"
+import {useStateValue} from "../context/StateProvider"
+import {MdChevronLeft,MdChevronRight} from "react-icons/md"
 export default function MainContainer() {
+  const [{foodItems},dispatch]=useStateValue();
+  const [scrollValue,setScrollValue] = useState(0);
+  useEffect(()=>{},[scrollValue])
   return (
     <>
     <div className="w-full h-auto flex-col items-center justify-center">
@@ -19,14 +27,27 @@ export default function MainContainer() {
           <div className="hidden md:flex gap-3 items-center">
             <motion.div whileTap={{scale:0.75}} className="w-8 h-8 rounded-lg bg-orange-300 hover:bg-orange-500
             cursor-pointer transition-all duration-100 ease-in-out
-            flex items-center justify-center hover:shadow-lg"></motion.div>
+            flex items-center justify-center hover:shadow-lg"
+            onClick={()=>setScrollValue(-200)}>
+              <MdChevronLeft className='text-lg text-white'/>'
+            </motion.div>
             <motion.div whileTap={{scale:0.75}} className="w-8 h-8 rounded-lg bg-orange-300 hover:bg-orange-500
             cursor-pointer transition-all duration-100 ease-in-out
-            flex items-center justify-center hover:shadow-lg"></motion.div>
+            flex items-center justify-center hover:shadow-lg"
+           onClick={()=>setScrollValue(200)} >
+              <MdChevronRight className='text-lg text-white'/>
+            </motion.div>
           </div>
         </div>
+        <RowContainer
+        scrollValue={scrollValue}
+         flag={true} 
+         data={foodItems?.filter((n)=>n.category=== "Fruits")}/>
       </section>
+      <Menu/>
+      <Cart/>
     </div>
+
     </>
   )
 }
